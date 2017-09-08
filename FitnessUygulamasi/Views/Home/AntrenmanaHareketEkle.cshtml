@@ -2,22 +2,51 @@
 @{
     ViewBag.Title = "Antrenmana Hareket Ekle";
 }
+@using FitnessUygulamasi.Models;
+@{ 
+    int seciliAntrenmanID = Model[0].antrenmanID;
+    string seciliAntrenmanAciklama = Model[0].antrenmanAciklama;
+    DateTime seciliAntrenmanTarih = Model[0].antrenmanTarih;
+    string seciliAntrenmanDurum = Model[0].antrenmanDurum;
+    if (seciliAntrenmanDurum == "0")
+    {
+        seciliAntrenmanDurum = "Yapılmadı";
+    }
+    else {
+        seciliAntrenmanDurum = "Yapıldı";
+    }
+
+    FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
+    var hareketListesi = dbContext.Hareketler.ToList();
+
+}
 <div class="Satir">
     <div class="col-4"></div>
     <div class="col-4">
-        <div class="simpleboxHeader UstBosluk">Antrenmana Hareket Ekle</div>
+        <div class="simpleboxHeader">Antrenmana Hareket Ekle</div>
         <div class="simpleboxContent">
             <div class="formBox">
-                <form action="#" method="post">
+                <form action="/Action/AntrenmanaHareketiKaydet" method="post">
                     <ul>
                         <li>Antrenman Açıklaması : </li>
-                        <li><input type="text" class="defaultInput inputFullWidth" value="Sırt ve ön kol antrenmanı." disabled><input type="hidden" name="seciliAntrenmanID" value="secilenantrenmanidsi" /></li>
+                        <li>
+                            <input type="text" class="defaultInput inputFullWidth" value="@seciliAntrenmanAciklama" disabled>
+                            <input type="hidden" name="antrenmanID" value="@seciliAntrenmanID" />
+                            <input type="hidden" name="hareketSira" value="0" />
+                        </li>
                         <li>Antrenman Tarihi : </li>
-                        <li><input type="text" class="defaultInput" value="08.09.2017" disabled></li>
+                        <li><input type="text" class="defaultInput" value="@seciliAntrenmanTarih.ToString().Substring(0,10)" disabled></li>
                         <li>Antrenman Durumu : </li>
-                        <li><input type="text" class="defaultInput" value="Yapıldı" disabled></li>
+                        <li><input type="text" class="defaultInput" value="@seciliAntrenmanDurum" disabled></li>
                         <li>Eklenecek Hareket : </li>
-                        <li><select class="defaultInput" name="hareketID"><option value="hareketID">Bench Press</option></select></li>
+                        <li>
+                            <select class="defaultInput" name="hareketID">
+                            @for (int i = 0; i < hareketListesi.Count; i++)
+                            {
+                                <option value="@hareketListesi[i].hareketID">@hareketListesi[i].hareketAdi</option>
+                            }
+                            </select>
+                        </li>
                         <li><button><i class="fa fa-save"></i>&nbsp; Hareketi Antrenmana Ekle</button></li>
                     </ul>
                 </form>

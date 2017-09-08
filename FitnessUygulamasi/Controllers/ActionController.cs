@@ -57,5 +57,15 @@ namespace FitnessUygulamasi.Controllers
 
             return View();
         }
+
+        // Antrenmana hareket kaydedildiğinde çalışacak fonksiyon.
+        public ActionResult AntrenmanaHareketiKaydet(AntrenmanKayitlari antrenmanKayit) {
+
+            dbContext.Entry(antrenmanKayit).State = EntityState.Added;
+            dbContext.SaveChanges();
+            Response.Redirect("/Home/Index");
+
+            return View();
+        }
     }
 }
