@@ -1,0 +1,239 @@
+﻿body {
+    margin: 0;
+    padding: 0;
+    background-color: #11171A;
+    font-family: 'Encode Sans', Tahoma;
+    font-size: 14px;
+}
+
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+.defaultInput {
+    font-family: 'Encode Sans', Tahoma;
+    font-size: 13px;
+    padding: 5px;
+    border: 1px solid #CCC;
+    border-radius: 3px;
+}
+
+.inputFullWidth {
+    width: 85%;
+}
+
+.inputSmallWidth {
+    width: 30%;
+    margin-right: 15px;
+}
+
+button {
+    border: 0px;
+    background-color: #F19E33;
+    padding: 8px 15px;
+    font-family: 'Encode Sans', Tahoma;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.Konteyner {
+    width: 90%;
+    margin: auto;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    justify-content: center;
+}
+
+.Satir {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.Satir::after {
+    display: table;
+    clear: both;
+    content: "";
+}
+
+.simpleboxHeader ul {
+    list-style: none;
+    margin: 0 0 0 25px;
+    padding: 0;
+}
+
+.simpleboxHeader ul li {
+    display: inline;
+    float: left;
+    padding-right: 25px;
+}
+
+.sabitMenu {
+    display: block;
+    position: fixed;
+    left: 50%;
+    margin-left: -100px;
+    bottom: 0;
+    height: 50px;
+    width: 200px;
+    line-height: 63px;
+    text-align: center;
+    background-color: #F19E33;
+}
+
+.sabitMenu ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sabitMenu ul li {
+    display: inline;
+    padding-right: 15px;
+}
+
+/* ################ TÜM SAYFALARDAKİ ORTAK KODLAR ######### */
+/* ################ DASHBOARD BÖLGESİ BAŞLANGIÇ ################## */
+.simpleboxHeader {
+    display: block;
+    position: relative;
+    margin: auto;
+    width: 96%;
+    height: 50px;
+    background-color: #F19E33;
+    color: #000;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+/* Sayfa içeriğindeki form kutularında menü ile arasına boşluk bırakmak için. */
+.UstBosluk {
+    margin-top: 3%;
+}
+
+.menuTamGenislik {
+    width: 99%;
+}
+
+.simpleboxContent {
+    display: block;
+    position: relative;
+    margin: auto;
+    width: 96%;
+    color: #000;
+    font-size: 12px;
+    background-color: #E3E8FF;
+}
+
+.simpleboxContent table {
+    width: 95%;
+    margin: auto;
+    border: 0px;
+}
+
+.simpleboxContent table tbody tr:hover {
+    background-color: #F8F9FF;
+}
+
+.simpleboxContent table thead tr td {
+    font-weight: bold;
+}
+
+/* ### TABLO SÜTUNLARI İÇİN ÖZEL TANIMLAMALAR  */
+.sutunSolBosluk {
+    width: 8%;
+}
+
+.sutunSetNumarasi {
+    width: 20%;
+}
+
+.sutunAgirlik {
+    width: 35%;
+}
+
+/* ############### DASHBOARD BÖLGESİ SONU ############# */
+/* ############### FORM SAYFALARI ORTAK BAŞLANGIÇ ####### */
+
+.formBox {
+    padding-top: 2%;
+}
+
+.formBox ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.formBox ul li {
+    padding-bottom: 3%;
+    padding-left: 2%;
+}
+
+/* ############### FORM SAYFALARI ORTAK SONU ####### */
+/* ############# CSS FLEX SÜTUN TANIMLAMALARI ####### */
+.col-1 {width: 8.33%}
+.col-2 {width: 16.66%}
+.col-3 {width: 25%;}
+.col-4 {width: 33.33%}
+.col-5 {width: 41.66%}
+.col-6 {width: 50%}
+.col-7 {width: 58.33%}
+.col-8 {width: 66.66%}
+.col-9 {width: 75%}
+.col-10 {width: 83.33%}
+.col-11 {width: 91.66%}
+.col-12 {width: 100%}
+
+/*############ MOBILE İÇİN GEREKEN TANIMLAMALAR #############*/
+/* ##### DASHBOARD İÇİN MOBILE RESPONSIVE ###### */
+@media screen and (max-width: 1200px) {
+    .col-3 {
+        width: 33.33%;
+        margin-bottom: 4%;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .col-3 {
+        width: 50%;
+        margin-bottom: 4%;
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .col-3 {
+        width: 100%;
+        margin-bottom: 4%;
+    }
+
+    .simpleboxHeader {
+        width: 100%;
+    }
+
+    .simpleboxContent {
+        width: 100%;
+    }
+}
+
+/* ##### TEK SÜTUNLU FORM SAYFALARI İÇİN ##### */
+@media screen and (max-width: 1024px) {
+    .col-4 {
+        width: 100%;
+        margin-bottom: 4%;
+    }
+
+    .simpleboxHeader {
+        width: 100%;
+    }
+
+    .simpleboxContent {
+        width: 100%;
+    }
+}

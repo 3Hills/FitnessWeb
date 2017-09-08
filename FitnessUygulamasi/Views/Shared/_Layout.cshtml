@@ -4,9 +4,21 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - ASP.NET Uygulamam</title>
+    <title>@ViewBag.Title - Fitness Uygulaması</title>
+    <script src="https://use.fontawesome.com/b7d1a3b29d.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans|Encode+Sans+Condensed" rel="stylesheet">
+    <link rel="stylesheet" href="~/Content/style.css" />
 </head>
 <body>
-@RenderBody()
+    <div class="sabitMenu">
+        <ul>
+            <li><a href="/" title="Dashboard"><i class="fa fa-home fa-2x"></i></a></li>
+            <li><a href="/Home/YeniAntrenmanEkle" title="Yeni Antrenman Ekle"><i class="fa fa-plus-square fa-2x"></i></a></li>
+            <li><a href="/Home/YeniHareketEkle" title="Yeni Hareket Ekle"><i class="fa fa-plus-square fa-2x"></i></a></li>
+        </ul>
+    </div>
+    <div class="Konteyner">
+        @RenderBody()
+    </div>
 </body>
 </html>
