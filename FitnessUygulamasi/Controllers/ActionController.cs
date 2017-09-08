@@ -73,5 +73,20 @@ namespace FitnessUygulamasi.Controllers
 
             return View();
         }
+
+        // Hareket kaydına set eklenirken çalışacak fonksiyon.
+        public ActionResult HareketeSetiKaydet(HareketSetleri set) {
+
+            // #### Gelen değerler sayı mı değil mi diye kontrol edilecek.
+            
+
+            // Harekete seti kaydetmesi komutunu veriyorum.
+            dbContext.Entry(set).State = EntityState.Added;
+            dbContext.SaveChanges();
+            Response.Redirect("/Home/Index");
+
+            return View();
+        }
+
     }
 }

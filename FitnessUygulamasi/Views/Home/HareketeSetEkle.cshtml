@@ -2,24 +2,52 @@
 @{
     ViewBag.Title = "Harekete Set Ekle";
 }
+@using FitnessUygulamasi.Models;
+@{ 
+    int kayitID = Model[0].kayitID;
+    int kayitAntrenmanID = Model[0].antrenmanID;
+    int kayitHareketID = Model[0].hareketID;
+
+    FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
+
+    var antrenmanBilgi = dbContext.Antrenmanlar.Where(antrenman => antrenman.antrenmanID == kayitAntrenmanID).ToList();
+    string antrenmanTarih = $"{antrenmanBilgi[0].antrenmanTarih.ToString().Substring(6, 4)}-{antrenmanBilgi[0].antrenmanTarih.ToString().Substring(3, 2)}-{antrenmanBilgi[0].antrenmanTarih.ToString().Substring(0, 2)}";
+    string antrenmanDurum;
+    if (antrenmanBilgi[0].antrenmanDurum == "0")
+    {
+        antrenmanDurum = "Yapılmadı";
+    }
+    else {
+        antrenmanDurum = "Yapıldı";
+    }
+
+    var hareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == kayitHareketID).ToList();
+
+}
 <div class="Satir">
     <div class="col-4"></div>
     <div class="col-4">
         <div class="simpleboxHeader">Harekete Set Ekle</div>
         <div class="simpleboxContent">
             <div class="formBox">
-                <form action="#" method="post">
+                <form action="/Action/HareketeSetiKaydet" method="post">
                     <ul>
                         <li>Antrenman Açıklaması : </li>
-                        <li><input type="text" class="defaultInput inputFullWidth" value="Sırt ve ön kol antrenmanı." disabled><input type="hidden" name="seciliAntrenmanID" value="secilenantrenmanidsi" /></li>
+                        <li>
+                            <input type="text" class="defaultInput inputFullWidth" value="@antrenmanBilgi[0].antrenmanAciklama" disabled>
+                            <input type="hidden" name="kayitID" value="@kayitID" />
+                        </li>
                         <li>Antrenman Tarihi : </li>
-                        <li><input type="text" class="defaultInput" value="08.09.2017" disabled></li>
+                        <li><input type="text" class="defaultInput" value="@antrenmanTarih" disabled></li>
                         <li>Antrenman Durumu : </li>
-                        <li><input type="text" class="defaultInput" value="Yapıldı" disabled></li>
+                        <li><input type="text" class="defaultInput" value="@antrenmanDurum" disabled></li>
                         <li>Set Eklenecek Hareket : </li>
-                        <li><input type="text" class="defaultInput" value="Bench Press" disabled></li>
+                        <li><input type="text" class="defaultInput inputFullWidth" value="@hareketBilgi[0].hareketAdi" disabled></li>
                         <li>Ağırlık ve Tekrar : </li>
-                        <li><input type="text" class="defaultInput inputSmallWidth" name="setAgirlik" placeholder="Ağırlık örn: 25"><input type="text" class="defaultInput inputSmallWidth" name="setTekrar" placeholder="Tekrar örn: 8"></li>
+                        <li>
+                            <input type="text" class="defaultInput inputSmallWidth" name="setAgirlik" placeholder="Ağırlık örn: 25">
+                            <input type="text" class="defaultInput inputSmallWidth" name="setTekrar" placeholder="Tekrar örn: 8">
+                        </li>
                         <li><button><i class="fa fa-save"></i>&nbsp; Harekete Set Ekle</button></li>
                     </ul>
                 </form>

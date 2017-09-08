@@ -45,8 +45,18 @@ namespace FitnessUygulamasi.Controllers
         }
 
         // Harekete set ekleme sayfası.
-        public ActionResult HareketeSetEkle() {
-            return View();
+        public ActionResult HareketeSetEkle(int id) {
+
+            // Gelen ID'ye ait hareket kaydı var mı kontrol ediyorum.
+            var kayitKontrol = dbContext.AntrenmanKayitlari.Find(id);
+                if (kayitKontrol == null) {
+                    Response.Redirect("/Home/Index");
+                }
+
+            // ID'ye ait bilgileri değişkene atayıp view dosyasına gönderiyorum.
+            var kayitBilgi = dbContext.AntrenmanKayitlari.Where(kayit => kayit.kayitID == id).ToList();
+
+            return View(kayitBilgi);
         }
     }
 }
