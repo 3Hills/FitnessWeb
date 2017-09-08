@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cd3cdf89ee5741f88c87886acd70f450" Name="Diagram1">
+        <EntityTypeShape EntityType="FitnessWebAppModel.AntrenmanKayitlari" Width="1.5" PointX="3" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessWebAppModel.Antrenmanlar" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessWebAppModel.Hareketler" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FitnessWebAppModel.HareketSetleri" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="FitnessWebAppModel.FK_AntrenmanKayitlari_Antrenmanlar" ManuallyRouted="false" />
+        <AssociationConnector Association="FitnessWebAppModel.FK_HareketSetleri_AntrenmanKayitlari" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

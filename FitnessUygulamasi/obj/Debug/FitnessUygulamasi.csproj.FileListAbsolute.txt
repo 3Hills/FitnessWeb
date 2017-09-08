@@ -72,3 +72,7 @@ D:\CSharp\ASP.NET\FitnessTakipUygulamasi\FitnessUygulamasi\bin\tr\System.Web.Web
 D:\CSharp\ASP.NET\FitnessTakipUygulamasi\FitnessUygulamasi\obj\Debug\FitnessUygulamasi.csprojResolveAssemblyReference.cache
 D:\CSharp\ASP.NET\FitnessTakipUygulamasi\FitnessUygulamasi\obj\Debug\FitnessUygulamasi.dll
 D:\CSharp\ASP.NET\FitnessTakipUygulamasi\FitnessUygulamasi\obj\Debug\FitnessUygulamasi.pdb
+D:\CSharp\ASP.NET\FitnessTakipUygulamasi\FitnessUygulamasi\bin\EntityFramework.dll
+D:\CSharp\ASP.NET\FitnessTakipUygulamasi\FitnessUygulamasi\bin\EntityFramework.SqlServer.dll
+D:\CSharp\ASP.NET\FitnessTakipUygulamasi\FitnessUygulamasi\bin\EntityFramework.xml
+D:\CSharp\ASP.NET\FitnessTakipUygulamasi\FitnessUygulamasi\bin\EntityFramework.SqlServer.xml

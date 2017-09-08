@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FitnessWebAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AntrenmanKayitlari">
+    <Key>
+      <PropertyRef Name="kayitID" />
+    </Key>
+    <Property Name="kayitID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="antrenmanID" Type="Int32" Nullable="false" />
+    <Property Name="hareketID" Type="Int32" Nullable="false" />
+    <Property Name="hareketSira" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Antrenmanlar">
+    <Key>
+      <PropertyRef Name="antrenmanID" />
+    </Key>
+    <Property Name="antrenmanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="antrenmanAciklama" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="antrenmanTarih" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="antrenmanDurum" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Hareketler">
+    <Key>
+      <PropertyRef Name="hareketID" />
+    </Key>
+    <Property Name="hareketID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="hareketAdi" Type="String" MaxLength="150" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityType Name="HareketSetleri">
+    <Key>
+      <PropertyRef Name="setID" />
+    </Key>
+    <Property Name="setID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="kayitID" Type="Int32" Nullable="false" />
+    <Property Name="setTekrar" Type="Int32" Nullable="false" />
+    <Property Name="setAgirlik" Type="Double" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AntrenmanKayitlari_Antrenmanlar">
+    <End Role="Antrenmanlar" Type="Self.Antrenmanlar" Multiplicity="1" />
+    <End Role="AntrenmanKayitlari" Type="Self.AntrenmanKayitlari" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Antrenmanlar">
+        <PropertyRef Name="antrenmanID" />
+      </Principal>
+      <Dependent Role="AntrenmanKayitlari">
+        <PropertyRef Name="antrenmanID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HareketSetleri_AntrenmanKayitlari">
+    <End Role="AntrenmanKayitlari" Type="Self.AntrenmanKayitlari" Multiplicity="1" />
+    <End Role="HareketSetleri" Type="Self.HareketSetleri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AntrenmanKayitlari">
+        <PropertyRef Name="kayitID" />
+      </Principal>
+      <Dependent Role="HareketSetleri">
+        <PropertyRef Name="kayitID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FitnessWebAppEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AntrenmanKayitlari" EntityType="Self.AntrenmanKayitlari" />
+    <EntitySet Name="Antrenmanlar" EntityType="Self.Antrenmanlar" />
+    <EntitySet Name="Hareketler" EntityType="Self.Hareketler" />
+    <EntitySet Name="HareketSetleri" EntityType="Self.HareketSetleri" />
+    <AssociationSet Name="FK_AntrenmanKayitlari_Antrenmanlar" Association="Self.FK_AntrenmanKayitlari_Antrenmanlar">
+      <End Role="Antrenmanlar" EntitySet="Antrenmanlar" />
+      <End Role="AntrenmanKayitlari" EntitySet="AntrenmanKayitlari" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HareketSetleri_AntrenmanKayitlari" Association="Self.FK_HareketSetleri_AntrenmanKayitlari">
+      <End Role="AntrenmanKayitlari" EntitySet="AntrenmanKayitlari" />
+      <End Role="HareketSetleri" EntitySet="HareketSetleri" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
