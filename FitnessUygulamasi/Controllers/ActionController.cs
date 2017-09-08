@@ -44,12 +44,14 @@ namespace FitnessUygulamasi.Controllers
         // Yeni antrenman kaydı yapılan bölüm.
         public ActionResult YeniAntrenmaniKaydet(Antrenmanlar antrenman) {
 
+            // Antrenman açıklaması kısmı ile ilgili kontrolleri yapıyorum. Sıkıntı varsa ana sayfaya yönlendiriyorum.
             if (String.IsNullOrEmpty(antrenman.antrenmanAciklama) || String.IsNullOrEmpty(antrenman.antrenmanAciklama.Trim()) || antrenman.antrenmanAciklama.Length > 250)
             {
                 Response.Redirect("/Home/YeniAntrenmanEkle?hata=antrenmanAciklamasiProblemli");
             }
             else {
 
+                // Sıkıntı yoksa yeni antrenmanı kaydetmesi için komut veriyorum.
                 dbContext.Entry(antrenman).State = EntityState.Added;
                 dbContext.SaveChanges();
                 Response.Redirect("/Home/Index");
@@ -61,8 +63,12 @@ namespace FitnessUygulamasi.Controllers
         // Antrenmana hareket kaydedildiğinde çalışacak fonksiyon.
         public ActionResult AntrenmanaHareketiKaydet(AntrenmanKayitlari antrenmanKayit) {
 
+            // Antrenmana ait hareketi ekleme komutu veriyorum.
             dbContext.Entry(antrenmanKayit).State = EntityState.Added;
+            // Kayıt işlemini tamamlıyorum.
             dbContext.SaveChanges();
+            // Ana sayfaya yolluyorum.
+            // ##### Burada şuan eklenen kayıta ait ID numarasını alıp harekete set ekle sayfasına direk yönlendirebilirim.
             Response.Redirect("/Home/Index");
 
             return View();
