@@ -1,6 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Yeni Antrenman Ekle";
+    string bugununTarihi = $"{DateTime.Now.ToString().Substring(6, 4)}-{DateTime.Now.ToString().Substring(3, 2)}-{DateTime.Now.ToString().Substring(0, 2)}";
 }
 <div class="Satir">
     <div class="col-4"></div>
@@ -8,14 +9,14 @@
         <div class="simpleboxHeader UstBosluk">Yeni Antrenman Kaydı Oluştur</div>
         <div class="simpleboxContent">
             <div class="formBox">
-                <form action="#" method="post">
+                <form action="/Action/YeniAntrenmaniKaydet" method="post">
                     <ul>
                         <li>Antrenman Açıklaması : </li>
-                        <li><input type="text" class="defaultInput inputFullWidth" name="antrenmanAciklamasi" placeholder="örn: Göğüs ve arka kol antrenmanı." /></li>
+                        <li><input type="text" class="defaultInput inputFullWidth" name="antrenmanAciklama" maxlength="250" placeholder="örn: Göğüs ve arka kol antrenmanı." /></li>
                         <li>Antrenman Tarihi : </li>
-                        <li><input type="date" class="defaultInput" name="antrenmanTarihi" /></li>
+                        <li><input type="date" class="defaultInput" name="antrenmanTarih" value="@bugununTarihi" /></li>
                         <li>Antrenman Durumu : </li>
-                        <li><select class="defaultInput" name="antrenmanDurumu"><option value="0">Yapılmadı</option><option value="1">Yapıldı</option></select></li>
+                        <li><select class="defaultInput" name="antrenmanDurum"><option value="0">Yapılmadı</option><option value="1">Yapıldı</option></select></li>
                         <li><button><i class="fa fa-save"></i>&nbsp; Antrenmanı Kaydet</button></li>
                     </ul>
                 </form>

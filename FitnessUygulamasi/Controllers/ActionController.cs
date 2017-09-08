@@ -40,5 +40,22 @@ namespace FitnessUygulamasi.Controllers
 
             return View();
         }
+
+        // Yeni antrenman kaydı yapılan bölüm.
+        public ActionResult YeniAntrenmaniKaydet(Antrenmanlar antrenman) {
+
+            if (String.IsNullOrEmpty(antrenman.antrenmanAciklama) || String.IsNullOrEmpty(antrenman.antrenmanAciklama.Trim()) || antrenman.antrenmanAciklama.Length > 250)
+            {
+                Response.Redirect("/Home/YeniAntrenmanEkle?hata=antrenmanAciklamasiProblemli");
+            }
+            else {
+
+                dbContext.Entry(antrenman).State = EntityState.Added;
+                dbContext.SaveChanges();
+                Response.Redirect("/Home/Index");
+            }
+
+            return View();
+        }
     }
 }
