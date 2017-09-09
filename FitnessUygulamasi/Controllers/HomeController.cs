@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FitnessUygulamasi.Models;
+using FitnessUygulamasi.DataTransferObject;
 
 namespace FitnessUygulamasi.Controllers
 {
@@ -15,7 +16,17 @@ namespace FitnessUygulamasi.Controllers
         // Dashboard sayfası.
         public ActionResult Index()
         {
-            return View();
+            var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar
+                                   orderby ant.antrenmanTarih descending
+                                   select new AntrenmanListesi
+                                   {
+                                       antrenmanID = ant.antrenmanID,
+                                       antrenmanAciklama = ant.antrenmanAciklama,
+                                       antrenmanTarih = ant.antrenmanTarih,
+                                       antrenmanDurum = ant.antrenmanDurum
+                                   }).ToList();
+
+            return View(tumAntrenmanlar);
         }
 
         // Yeni hareket ekleme sayfası.

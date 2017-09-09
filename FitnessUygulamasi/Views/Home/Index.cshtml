@@ -1,39 +1,60 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
 }
+@model List<FitnessUygulamasi.DataTransferObject.AntrenmanListesi>
+@using FitnessUygulamasi.Models;
+@{ 
+    FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
+}
 <div class="Satir">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        int seciliAntrenmanID = Model[i].antrenmanID;
+        var antrenmanKayitlari = dbContext.AntrenmanKayitlari.Where(antrenman => antrenman.antrenmanID == seciliAntrenmanID).ToList();
     <div class="col-3">
-        <div class="simpleboxHeader">06 Ağustos | Omuz Antrenmanı&nbsp;&nbsp; <a href="#" title="Antrenmana yeni hareket ekle"><i class="fa fa-plus-square"></a></i></div>
+        <div class="simpleboxHeader">
+        @Model[i].antrenmanTarih.ToString().Substring(0, 5) | @Model[i].antrenmanAciklama&nbsp;&nbsp; 
+            <a href="/Home/AntrenmanaHareketEkle/@Model[i].antrenmanID" title="Antrenmana yeni hareket ekle">
+                <i class="fa fa-plus-square"></i>
+            </a>&nbsp;
+            <a href="#" title="Antrenmanı ve tüm verilerini sil">
+                <i class="fa fa-trash-o"></i>
+            </a>
+        </div>
         <div class="simpleboxContent">
             <table cellspacing="0">
                 <thead>
                     <tr>
                         <td height="5%"></td>
                     </tr>
+                </thead>
+            @for (int x = 0; x < antrenmanKayitlari.Count; x++)
+            {
+                int seciliHareketID = antrenmanKayitlari[x].hareketID;
+                var hareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == seciliHareketID).ToList();
+                string seciliHareketAdi = hareketBilgi[0].hareketAdi;
+
+                int seciliKayitID = antrenmanKayitlari[x].kayitID;
+                var hareketSetleri = dbContext.HareketSetleri.Where(set => set.kayitID == seciliKayitID).ToList();
+                <thead>
                     <tr>
-                        <td height="25" colspan="4">Barbell Shoulder Press &nbsp; <a href="#" title="Harekete yeni set ekle"><i class="fa fa-plus-square"></a></i>&nbsp; <a href="#" title="Hareketi ve setleri sil"><i class="fa fa-trash-o"></a></i></td>
+                        <td height="25" colspan="4">@seciliHareketAdi 
+                        &nbsp; <a href="/Home/HareketeSetEkle/@antrenmanKayitlari[x].kayitID" title="Harekete yeni set ekle"><i class="fa fa-plus-square"></i></a>
+                        &nbsp; <a href="/Action/AntrenmanKayitKompleSil/@antrenmanKayitlari[x].kayitID" title="Hareketi ve setleri sil"><i class="fa fa-trash-o"></i></a></td>
                     </tr>
                 </thead>
+                for (int z = 0; z < hareketSetleri.Count; z++)
+                {
                 <tbody>
                     <tr>
-                        <td class="sutunSolBosluk" height="23"><a href="#" title="Bu seti sil"><i class="fa fa-trash-o"></a></i></td>
-                        <td class="sutunSetNumarasi">Set : 1</td>
-                        <td class="sutunAgirlik">Ağırlık : 25 KG</td>
-                        <td>Tekrar : 8</td>
-                    </tr>
-                    <tr>
-                        <td class="sutunSolBosluk" height="23"><a href="#" title="Bu seti sil"><i class="fa fa-trash-o"></a></i></td>
-                        <td class="sutunSetNumarasi">Set : 2</td>
-                        <td class="sutunAgirlik">Ağırlık : 25 KG</td>
-                        <td>Tekrar : 8</td>
-                    </tr>
-                    <tr>
-                        <td class="sutunSolBosluk" height="23"><a href="#" title="Bu seti sil"><i class="fa fa-trash-o"></a></i></td>
-                        <td class="sutunSetNumarasi">Set : 3</td>
-                        <td class="sutunAgirlik">Ağırlık : 25 KG</td>
-                        <td>Tekrar : 8</td>
+                        <td class="sutunSolBosluk" height="23"><a href="/Action/SetSil/@hareketSetleri[z].setID" title="Bu seti sil"><i class="fa fa-trash-o"></i></a></td>
+                        <td class="sutunSetNumarasi">Set : @(z+1)</td>
+                        <td class="sutunAgirlik">Ağırlık : @hareketSetleri[z].setAgirlik KG</td>
+                        <td>Tekrar : @hareketSetleri[z].setTekrar</td>
                     </tr>
                 </tbody>
+                }
+            }   
                 <thead>
                     <tr>
                         <td height="5%"></td>
@@ -42,4 +63,5 @@
             </table>
         </div>
     </div>
+    }
 </div>

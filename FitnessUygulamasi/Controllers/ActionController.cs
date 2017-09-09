@@ -88,5 +88,53 @@ namespace FitnessUygulamasi.Controllers
             return View();
         }
 
+        // Girilen ID'ye ait seti silen fonksiyon.
+        public ActionResult SetSil(int id) {
+
+            // Veritabanında gönderilen ID'ye ait seti seçiyorum.
+            // Kayıt varsa sil, yoksa geri gönder diyorum.
+            var setKontrol = dbContext.HareketSetleri.FirstOrDefault(kayit => kayit.setID == id);
+            if (setKontrol != null)
+            {
+                // Seçilen kaydı Remove fonksiyonuna parametre olarak gönderiyorum.
+                dbContext.HareketSetleri.Remove(setKontrol);
+                dbContext.SaveChanges();
+                Response.Redirect("/Home/Index?mesaj=setSilindi");
+            }
+            else {
+                Response.Redirect("/Home/Index?mesaj=setBulunamadi");
+            }
+
+            return View();
+        }
+
+        // Antrenmana ait hareketi ve ona ait setleri silen fonksiyon.
+        public ActionResult AntrenmanKayitKompleSil(int id) {
+
+            // İlk olarak gelen kayitID'yi aratıcam, varsa ona ait setleri silicem.
+            // Setleri silme işlemi tamamlandıktan sonra kayitID'ye ait kaydı silicem.
+
+            var kayitKontrol = dbContext.AntrenmanKayitlari.FirstOrDefault(kayit => kayit.kayitID == id);
+            if (kayitKontrol != null)
+            {
+                // kayitID'ye ait setleri for döngüsü içerisinde listeleyip silicem.
+                var setListesi = dbContext.HareketSetleri.Where(set => set.kayitID == id).ToList();
+                for (int i = 0; i < setListesi.Count; i++)
+                {
+                    dbContext.HareketSetleri.Remove(setListesi[i]);
+                    dbContext.SaveChanges();
+                }
+                // Antrenman kaydı silme işlemini döngünün dışında yapıyorum.
+                dbContext.AntrenmanKayitlari.Remove(kayitKontrol);
+                dbContext.SaveChanges();
+                Response.Redirect("/Home/Index?mesaj=hareketVeSetlerSilindi");
+            }
+            else {
+                Response.Redirect("/Home/Index?mesaj=kayitIDBulunamadi");
+            }
+
+            return View();
+        }
+
     }
 }
