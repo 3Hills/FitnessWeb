@@ -136,5 +136,44 @@ namespace FitnessUygulamasi.Controllers
             return View();
         }
 
+        // Antrenmanı, alt hareketleri ve setleri silen fonksiyon.
+        public ActionResult AntrenmanSil(int id) {
+
+            var antrenmanKontrol = dbContext.Antrenmanlar.FirstOrDefault(antrenman => antrenman.antrenmanID == id);
+            if (antrenmanKontrol != null)
+            {
+                var kayitListesi = dbContext.AntrenmanKayitlari.Where(kayit => kayit.antrenmanID == antrenmanKontrol.antrenmanID).ToList();
+                if (antrenmanKontrol != null) {
+                    for (int i = 0; i < kayitListesi.Count; i++)
+                    {
+                        int seciliKayitID = kayitListesi[i].kayitID; // Linq sorgusunun içine kayitListesi[i].kayitID yazınca hata veriyor.
+                        var setListesi = dbContext.HareketSetleri.Where(set => set.kayitID == seciliKayitID).ToList();
+                        if (setListesi != null) {
+                            for (int z = 0; z < setListesi.Count; z++)
+                            {
+                                // Burada harekete ait setleri siliyorum.
+                                dbContext.HareketSetleri.Remove(setListesi[z]);
+                                dbContext.SaveChanges();
+                            }
+                        }
+
+                        // Burada hareket kaydını silicem.
+                        dbContext.AntrenmanKayitlari.Remove(kayitListesi[i]);
+                        dbContext.SaveChanges();
+                    }
+                }
+
+                // Burada antrenmanı silicem.
+                dbContext.Antrenmanlar.Remove(antrenmanKontrol);
+                dbContext.SaveChanges();
+                Response.Redirect("/Home/Index?mesaj=antrenmanBasariylaSilindi");
+            }
+            else {
+                Response.Redirect("/Home/Index?mesaj=antrenmanIDBulunamadi");
+            }
+
+            return View();
+        }
+
     }
 }
