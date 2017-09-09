@@ -16,7 +16,7 @@ namespace FitnessUygulamasi.Controllers
         // Dashboard sayfası.
         public ActionResult Index()
         {
-            var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar
+            var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar.Take(4) // Take fonksiyonu ile 4 kayıt al diyorum.
                                    orderby ant.antrenmanTarih descending
                                    select new AntrenmanListesi
                                    {
