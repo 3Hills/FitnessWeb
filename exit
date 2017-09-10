@@ -1,0 +1,59 @@
+[33mcommit 5b59aeead5b40f9c480a3fec746daee07a7ccae2[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Sun Sep 10 01:12:02 2017 +0300
+
+    Son ufak değişikliklerin ardından tüm sistem çalışır hale geldi.
+
+[33mcommit b5d6c8b576ab3ca07f9dcf3c73d467e59cea8059[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Sun Sep 10 00:37:55 2017 +0300
+
+    Antrenman ve alt tüm başlıkları silen fonksiyon tamamlandı.
+
+[33mcommit 653c7c3532518a823877043ff9edf7b64b82c16f[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Sat Sep 9 15:45:49 2017 +0300
+
+    Dashboard düzenlemeleri, set sil, hareket ve setlerini sil fonksiyonları tamamlandı.
+
+[33mcommit c82b27561e3438bcee0d3fa0e3e75c4805c47bca[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Fri Sep 8 19:01:44 2017 +0300
+
+    Harekete set kaydı kısmı da tamamlandı.
+
+[33mcommit 2435f4fbf10eada691fc138bf8fc07e1397b56be[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Fri Sep 8 18:26:12 2017 +0300
+
+    Ufak düzeltmeler ve yorum satırı eklemeleri.
+
+[33mcommit 0deef391da73882a7ae45b0e385937a0b95715d9[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Fri Sep 8 18:21:05 2017 +0300
+
+    Antrenmana hareket kaydı kısmı tamamlandı.
+
+[33mcommit d9ab1371825f12c8786bfd5a82fe48f33472e28b[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Fri Sep 8 17:29:09 2017 +0300
+
+    Yeni antrenman kaydetme fonksiyonu tamamlandı.
+
+[33mcommit a82cf5f1ed716d2de246e29b7710026c4de780b9[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Fri Sep 8 15:36:55 2017 +0300
+
+    Model kısmı eklendi, action controller hazırlandı, yeni hareket kaydı fonksiyonu tamamlandı.
+
+[33mcommit 30ce9254d7156deab749b295931f9433a756c647[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Fri Sep 8 14:24:02 2017 +0300
+
+    Veritabanı işlemlerinden önceki son düzenlemeler yapıldı.
+
+[33mcommit 86f2236af8e899d8a80a0e1836256185304d9036[m
+Author: Alican Üçtepe <alicanuc@gmail.com>
+Date:   Fri Sep 8 12:11:56 2017 +0300
+
+    Sıfır uygulama.
