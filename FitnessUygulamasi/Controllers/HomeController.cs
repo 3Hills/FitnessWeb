@@ -13,7 +13,10 @@ namespace FitnessUygulamasi.Controllers
 
         FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
 
-        // Dashboard sayfası.
+        /// <summary>
+        /// Dashboard sayfası.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Index()
         {
             var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar.Take(4) // Take fonksiyonu ile 4 kayıt al diyorum.
