@@ -13,10 +13,24 @@ namespace FitnessUygulamasi.Controllers
 
         FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
 
-        // Dashboard sayfası.
-        public ActionResult Index()
+        /// <summary>
+        /// Dashboard sayfası.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Index(int? id)
         {
-            var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar.Take(4) // Take fonksiyonu ile 4 kayıt al diyorum.
+
+            // Eğer ID değeri girilmişse dashboard sayfasında 8 kayıt görüntülenecek.
+            int howManyRowWillShow;
+            if (id != null)
+            {
+                howManyRowWillShow = 8;
+            }
+            else {
+                howManyRowWillShow = 4;
+            }
+
+            var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar.Take(howManyRowWillShow) // Take fonksiyonu ile 4 kayıt al diyorum.
                                    orderby ant.antrenmanTarih descending
                                    select new AntrenmanListesi
                                    {
@@ -29,17 +43,27 @@ namespace FitnessUygulamasi.Controllers
             return View(tumAntrenmanlar);
         }
 
-        // Yeni hareket ekleme sayfası.
+        /// <summary>
+        /// Yeni hareket ekleme sayfasını çalıştıran method.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult YeniHareketEkle() {
             return View();
         }
 
-        // Yeni antrenman ekleme sayfası.
+        /// <summary>
+        /// Yeni antrenman ekleme sayfasını çalıştıran method.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult YeniAntrenmanEkle() {
             return View();
         }
 
-        // Antrenmana hareket ekleme sayfası.
+        /// <summary>
+        /// Antrenmana hareket ekleme sayfasını çalıştıran method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult AntrenmanaHareketEkle(int id) {
 
             // Gelen ID'ye ait antrenman var mı kontrol ediyorum. Eğer yoksa ana sayfaya gönderiyorum.
@@ -55,7 +79,11 @@ namespace FitnessUygulamasi.Controllers
             return View(antrenmanBilgi);
         }
 
-        // Harekete set ekleme sayfası.
+        /// <summary>
+        /// Harekete set ekleme sayfasını çalıştıran method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public ActionResult HareketeSetEkle(int id) {
 
             // Gelen ID'ye ait hareket kaydı var mı kontrol ediyorum.

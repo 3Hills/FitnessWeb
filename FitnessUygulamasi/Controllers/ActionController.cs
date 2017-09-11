@@ -16,7 +16,11 @@ namespace FitnessUygulamasi.Controllers
 
         FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
 
-        // Yeni hareket kaydı yapılan bölüm.
+        /// <summary>
+        /// Yeni hareket kaydı formundan gelen verileri kaydeden method.
+        /// </summary>
+        /// <param name="hareket"></param>
+        /// <returns></returns>
         public ActionResult YeniHareketiKaydet(Hareketler hareket)
         {
 
@@ -31,7 +35,7 @@ namespace FitnessUygulamasi.Controllers
                 // ########### BU BÖLGEDE HAREKET ADINA GÖRE DAHA ÖNCE EKLENDİ Mİ KONTROLÜ YAPABİLİRİM ###########
 
                 // Hareketler tablosuna veriyi kaydetmesini söylüyorum.
-                dbContext.Entry(hareket).State = EntityState.Added;
+                dbContext.Hareketler.Add(hareket);
                 // Kaydetme işlemini yapıyorum.
                 dbContext.SaveChanges();
                 // Ana sayfaya gönderiyorum.
@@ -41,7 +45,11 @@ namespace FitnessUygulamasi.Controllers
             return View();
         }
 
-        // Yeni antrenman kaydı yapılan bölüm.
+        /// <summary>
+        /// Yeni antrenman kaydı formundan gelen verileri kaydeden method.
+        /// </summary>
+        /// <param name="antrenman"></param>
+        /// <returns></returns>
         public ActionResult YeniAntrenmaniKaydet(Antrenmanlar antrenman) {
 
             // Antrenman açıklaması kısmı ile ilgili kontrolleri yapıyorum. Sıkıntı varsa ana sayfaya yönlendiriyorum.
@@ -52,7 +60,7 @@ namespace FitnessUygulamasi.Controllers
             else {
 
                 // Sıkıntı yoksa yeni antrenmanı kaydetmesi için komut veriyorum.
-                dbContext.Entry(antrenman).State = EntityState.Added;
+                dbContext.Antrenmanlar.Add(antrenman);
                 dbContext.SaveChanges();
                 Response.Redirect("/Home/Index");
             }
@@ -60,11 +68,15 @@ namespace FitnessUygulamasi.Controllers
             return View();
         }
 
-        // Antrenmana hareket kaydedildiğinde çalışacak fonksiyon.
+        /// <summary>
+        /// Antrenmana yeni hareket ekleme formunda gelen verileri kaydeden method.
+        /// </summary>
+        /// <param name="antrenmanKayit"></param>
+        /// <returns></returns>
         public ActionResult AntrenmanaHareketiKaydet(AntrenmanKayitlari antrenmanKayit) {
 
             // Antrenmana ait hareketi ekleme komutu veriyorum.
-            dbContext.Entry(antrenmanKayit).State = EntityState.Added;
+            dbContext.AntrenmanKayitlari.Add(antrenmanKayit);
             // Kayıt işlemini tamamlıyorum.
             dbContext.SaveChanges();
             // Ana sayfaya yolluyorum.
@@ -74,22 +86,30 @@ namespace FitnessUygulamasi.Controllers
             return View();
         }
 
-        // Hareket kaydına set eklenirken çalışacak fonksiyon.
+        /// <summary>
+        /// Hareket kaydına set ekleme formundan gelen verileri kaydeden method.
+        /// </summary>
+        /// <param name="set"></param>
+        /// <returns></returns>
         public ActionResult HareketeSetiKaydet(HareketSetleri set) {
 
             // #### Gelen değerler sayı mı değil mi diye kontrol edilecek.
-            
+
 
             // Harekete seti kaydetmesi komutunu veriyorum.
-            dbContext.Entry(set).State = EntityState.Added;
+            dbContext.HareketSetleri.Add(set);
             dbContext.SaveChanges();
             Response.Redirect("/Home/Index");
 
             return View();
         }
 
-        // Girilen ID'ye ait seti silen fonksiyon.
-        public ActionResult SetSil(int id) {
+        /// <summary>
+        /// Girilen ID'ye ait seti silen method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult SetSil(int? id) {
 
             // Veritabanında gönderilen ID'ye ait seti seçiyorum.
             // Kayıt varsa sil, yoksa geri gönder diyorum.
@@ -108,8 +128,12 @@ namespace FitnessUygulamasi.Controllers
             return View();
         }
 
-        // Antrenmana ait hareketi ve ona ait setleri silen fonksiyon.
-        public ActionResult AntrenmanKayitKompleSil(int id) {
+        /// <summary>
+        /// Antrenmana ait hareketi ve altındaki setleri silen method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult AntrenmanKayitKompleSil(int? id) {
 
             // İlk olarak gelen kayitID'yi aratıcam, varsa ona ait setleri silicem.
             // Setleri silme işlemi tamamlandıktan sonra kayitID'ye ait kaydı silicem.
@@ -136,8 +160,12 @@ namespace FitnessUygulamasi.Controllers
             return View();
         }
 
-        // Antrenmanı, alt hareketleri ve setleri silen fonksiyon.
-        public ActionResult AntrenmanSil(int id) {
+        /// <summary>
+        /// Antrenmanı ve altındaki her şeyi silen method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult AntrenmanSil(int? id) {
 
             var antrenmanKontrol = dbContext.Antrenmanlar.FirstOrDefault(antrenman => antrenman.antrenmanID == id);
             if (antrenmanKontrol != null)

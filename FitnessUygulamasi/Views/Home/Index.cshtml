@@ -9,11 +9,12 @@
 <div class="Satir">
     @for (int i = 0; i < Model.Count; i++)
     {
+        var antrenmanTarih = Model[i].antrenmanTarih;
         int seciliAntrenmanID = Model[i].antrenmanID;
         var antrenmanKayitlari = dbContext.AntrenmanKayitlari.Where(antrenman => antrenman.antrenmanID == seciliAntrenmanID).ToList();
     <div class="col-3">
         <div class="simpleboxHeader">
-        @Model[i].antrenmanTarih.ToString().Substring(0, 5) | @Model[i].antrenmanAciklama&nbsp;&nbsp; 
+        @String.Format("{0:dd MMMM}", antrenmanTarih) | @Model[i].antrenmanAciklama&nbsp;&nbsp; 
             <a href="/Home/AntrenmanaHareketEkle/@Model[i].antrenmanID" title="Antrenmana yeni hareket ekle">
                 <i class="fa fa-plus-square"></i>
             </a>&nbsp;
