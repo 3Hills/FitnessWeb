@@ -4,7 +4,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using FitnessUygulamasi.Models;
-using FitnessUygulamasi.DataTransferObject;
 
 namespace FitnessUygulamasi.Controllers
 {
@@ -30,17 +29,30 @@ namespace FitnessUygulamasi.Controllers
                 howManyRowWillShow = 4;
             }
 
-            var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar.Take(howManyRowWillShow) // Take fonksiyonu ile 4 kayıt al diyorum.
-                                   orderby ant.antrenmanTarih descending
-                                   select new AntrenmanListesi
-                                   {
-                                       antrenmanID = ant.antrenmanID,
-                                       antrenmanAciklama = ant.antrenmanAciklama,
-                                       antrenmanTarih = ant.antrenmanTarih,
-                                       antrenmanDurum = ant.antrenmanDurum
-                                   }).ToList();
+            // Eski DataTransferObject yöntemi.
+            //var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar.Take(howManyRowWillShow) // Take fonksiyonu ile 4 kayıt al diyorum.
+            //                       orderby ant.antrenmanTarih descending
+            //                       select new AntrenmanListesi
+            //                       {
+            //                           antrenmanID = ant.antrenmanID,
+            //                           antrenmanAciklama = ant.antrenmanAciklama,
+            //                           antrenmanTarih = ant.antrenmanTarih,
+            //                           antrenmanDurum = ant.antrenmanDurum
+            //                       }).ToList();
 
-            return View(tumAntrenmanlar);
+            var allWorkouts = dbContext.Antrenmanlar.OrderByDescending(c => c.antrenmanTarih).Take(howManyRowWillShow).ToList();
+            for (int i = 0; i < allWorkouts.Count; i++)
+            {
+                ViewBag.antrenmanKayitlari[i] = dbContext.AntrenmanKayitlari.Where(antrenman => antrenman.antrenmanID == allWorkouts[i].antrenmanID).ToList();
+                var seciliHareketID = 0;
+                for (int y = 0; y < ViewBag.antrenmanKayitlari[i].Count; y++)
+                {
+                    seciliHareketID = ViewBag.antrenmanKayitlari[i].hareketID;
+                    var hareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == seciliHareketID).ToList();
+                }
+            }
+
+            return View(allWorkouts);
         }
 
         /// <summary>

@@ -1,8 +1,8 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
 }
-@model List<FitnessUygulamasi.DataTransferObject.AntrenmanListesi>
 @using FitnessUygulamasi.Models;
+@using FitnessUygulamasi.Controllers;
 @{ 
     FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
 }
@@ -14,7 +14,7 @@
         var antrenmanKayitlari = dbContext.AntrenmanKayitlari.Where(antrenman => antrenman.antrenmanID == seciliAntrenmanID).ToList();
     <div class="col-3">
         <div class="simpleboxHeader">
-        @String.Format("{0:dd MMMM}", antrenmanTarih) | @Model[i].antrenmanAciklama&nbsp;&nbsp; 
+        @String.Format("{0:dd MMMM dddd}", antrenmanTarih) | @Model[i].antrenmanAciklama&nbsp;&nbsp; 
             <a href="/Home/AntrenmanaHareketEkle/@Model[i].antrenmanID" title="Antrenmana yeni hareket ekle">
                 <i class="fa fa-plus-square"></i>
             </a>&nbsp;
