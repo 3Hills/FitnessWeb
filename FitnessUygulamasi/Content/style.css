@@ -115,11 +115,6 @@ button {
     border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 
-/* Sayfa içeriğindeki form kutularında menü ile arasına boşluk bırakmak için. */
-.UstBosluk {
-    margin-top: 3%;
-}
-
 .menuTamGenislik {
     width: 99%;
 }

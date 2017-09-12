@@ -2,27 +2,18 @@
 @{
     ViewBag.Title = "Harekete Set Ekle";
 }
-@using FitnessUygulamasi.Models;
 @{ 
     int kayitID = Model[0].kayitID;
-    int kayitAntrenmanID = Model[0].antrenmanID;
-    int kayitHareketID = Model[0].hareketID;
 
-    FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
-
-    var antrenmanBilgi = dbContext.Antrenmanlar.Where(antrenman => antrenman.antrenmanID == kayitAntrenmanID).ToList();
-    string antrenmanTarih = $"{antrenmanBilgi[0].antrenmanTarih.ToString().Substring(6, 4)}-{antrenmanBilgi[0].antrenmanTarih.ToString().Substring(3, 2)}-{antrenmanBilgi[0].antrenmanTarih.ToString().Substring(0, 2)}";
+    string antrenmanTarih = String.Format("{0: dd MMMM yyyy dddd}", ViewBag.AntrenmanBilgi[0].antrenmanTarih);
     string antrenmanDurum;
-    if (antrenmanBilgi[0].antrenmanDurum == "0")
+    if (ViewBag.AntrenmanBilgi[0].antrenmanDurum == "0")
     {
         antrenmanDurum = "Yapılmadı";
     }
     else {
         antrenmanDurum = "Yapıldı";
     }
-
-    var hareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == kayitHareketID).ToList();
-
 }
 <div class="Satir">
     <div class="col-4"></div>
@@ -34,7 +25,7 @@
                     <ul>
                         <li>Antrenman Açıklaması : </li>
                         <li>
-                            <input type="text" class="defaultInput inputFullWidth" value="@antrenmanBilgi[0].antrenmanAciklama" disabled>
+                            <input type="text" class="defaultInput inputFullWidth" value="@ViewBag.AntrenmanBilgi[0].antrenmanAciklama" disabled>
                             <input type="hidden" name="kayitID" value="@kayitID" />
                         </li>
                         <li>Antrenman Tarihi : </li>
@@ -42,7 +33,7 @@
                         <li>Antrenman Durumu : </li>
                         <li><input type="text" class="defaultInput" value="@antrenmanDurum" disabled></li>
                         <li>Set Eklenecek Hareket : </li>
-                        <li><input type="text" class="defaultInput inputFullWidth" value="@hareketBilgi[0].hareketAdi" disabled></li>
+                        <li><input type="text" class="defaultInput inputFullWidth" value="@ViewBag.HareketBilgi[0].hareketAdi" disabled></li>
                         <li>Ağırlık ve Tekrar : </li>
                         <li>
                             <input type="text" class="defaultInput inputSmallWidth" name="setAgirlik" placeholder="Ağırlık örn: 25">

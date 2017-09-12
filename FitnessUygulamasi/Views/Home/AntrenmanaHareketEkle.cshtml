@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Antrenmana Hareket Ekle";
 }
-@using FitnessUygulamasi.Models;
 @{ 
     int seciliAntrenmanID = Model[0].antrenmanID;
     string seciliAntrenmanAciklama = Model[0].antrenmanAciklama;
@@ -15,9 +14,6 @@
     else {
         seciliAntrenmanDurum = "Yapıldı";
     }
-
-    FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
-    var hareketListesi = dbContext.Hareketler.ToList();
 
 }
 <div class="Satir">
@@ -35,15 +31,15 @@
                             <input type="hidden" name="hareketSira" value="0" />
                         </li>
                         <li>Antrenman Tarihi : </li>
-                        <li><input type="text" class="defaultInput" value="@seciliAntrenmanTarih.ToString().Substring(0,10)" disabled></li>
+                        <li><input type="text" class="defaultInput" value="@String.Format("{0:dd MMMM yyyy dddd}", seciliAntrenmanTarih)" disabled></li>
                         <li>Antrenman Durumu : </li>
                         <li><input type="text" class="defaultInput" value="@seciliAntrenmanDurum" disabled></li>
                         <li>Eklenecek Hareket : </li>
                         <li>
                             <select class="defaultInput" name="hareketID">
-                            @for (int i = 0; i < hareketListesi.Count; i++)
+                            @for (int i = 0; i < ViewBag.Hareketler.Count; i++)
                             {
-                                <option value="@hareketListesi[i].hareketID">@hareketListesi[i].hareketAdi</option>
+                                <option value="@ViewBag.Hareketler[i].hareketID">@ViewBag.Hareketler[i].hareketAdi</option>
                             }
                             </select>
                         </li>
