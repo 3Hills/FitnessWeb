@@ -158,6 +158,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Library\HelperMethods.cs" />
     <Compile Include="Models\AntrenmanKayitlari.cs">
       <DependentUpon>FitnessModel.tt</DependentUpon>
     </Compile>

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using FitnessUygulamasi.Models;
-using System.Data.Entity;
+using FitnessUygulamasi.Library;
 
 namespace FitnessUygulamasi.Controllers
 {
@@ -94,12 +92,16 @@ namespace FitnessUygulamasi.Controllers
         public ActionResult HareketeSetiKaydet(HareketSetleri set) {
 
             // #### Gelen değerler sayı mı değil mi diye kontrol edilecek.
-
-
-            // Harekete seti kaydetmesi komutunu veriyorum.
-            dbContext.HareketSetleri.Add(set);
-            dbContext.SaveChanges();
-            Response.Redirect("/Home/Index");
+            if (Request.Form["setAgirlik"].isNumeric() == false && Request.Form["setTekrar"].isNumeric() == false)
+            {
+                Response.Redirect($"/Home/HareketeSetEkle/{Request.Form["kayitID"]}?mesaj=agirlikTekrarSayiDegil");
+            }
+            else {
+                // Harekete seti kaydetmesi komutunu veriyorum.
+                dbContext.HareketSetleri.Add(set);
+                dbContext.SaveChanges();
+                Response.Redirect("/Home/Index");
+            }
 
             return View();
         }
@@ -167,6 +169,8 @@ namespace FitnessUygulamasi.Controllers
         /// <returns></returns>
         public ActionResult AntrenmanSil(int? id) {
 
+            // Antrenman altındaki hareketleri, ardından hareket altındaki setleri listeliyorum.
+            // Sırasıyla setleri, ardından hareketleri, en sonda da antrenmanı siliyorum.
             var antrenmanKontrol = dbContext.Antrenmanlar.FirstOrDefault(antrenman => antrenman.antrenmanID == id);
             if (antrenmanKontrol != null)
             {

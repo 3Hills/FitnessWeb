@@ -2,67 +2,70 @@
     ViewBag.Title = "Dashboard";
 }
 @using FitnessUygulamasi.Models;
-@using FitnessUygulamasi.Controllers;
 @{ 
     FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
 }
 <div class="Satir">
-    @for (int i = 0; i < Model.Count; i++)
+    @foreach (var antrenman in Model)
     {
-        var antrenmanTarih = Model[i].antrenmanTarih;
-        int seciliAntrenmanID = Model[i].antrenmanID;
-        var antrenmanKayitlari = dbContext.AntrenmanKayitlari.Where(antrenman => antrenman.antrenmanID == seciliAntrenmanID).ToList();
-    <div class="col-3">
-        <div class="simpleboxHeader">
-        @String.Format("{0:dd MMMM dddd}", antrenmanTarih) | @Model[i].antrenmanAciklama&nbsp;&nbsp; 
-            <a href="/Home/AntrenmanaHareketEkle/@Model[i].antrenmanID" title="Antrenmana yeni hareket ekle">
-                <i class="fa fa-plus-square"></i>
-            </a>&nbsp;
-            <a href="/Action/AntrenmanSil/@Model[i].antrenmanID" title="Antrenmanı ve tüm verilerini sil">
-                <i class="fa fa-trash-o"></i>
-            </a>
-        </div>
-        <div class="simpleboxContent">
-            <table cellspacing="0">
-                <thead>
-                    <tr>
-                        <td height="5%"></td>
-                    </tr>
-                </thead>
-            @for (int x = 0; x < antrenmanKayitlari.Count; x++)
-            {
-                int seciliHareketID = antrenmanKayitlari[x].hareketID;
-                var hareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == seciliHareketID).ToList();
-                string seciliHareketAdi = hareketBilgi[0].hareketAdi;
+        var antrenmanTarih = antrenman.antrenmanTarih;
+        int seciliAntrenmanID = antrenman.antrenmanID;
+        var antrenmanKayitlari = dbContext.AntrenmanKayitlari.Where(ant => ant.antrenmanID == seciliAntrenmanID).ToList();
+        <div class="col-3">
+            <div class="simpleboxHeader">
+                @String.Format("{0:dd MMMM dddd}", antrenmanTarih) | @antrenman.antrenmanAciklama&nbsp;&nbsp;
+                <a href="/Home/AntrenmanaHareketEkle/@seciliAntrenmanID" title="Antrenmana yeni hareket ekle">
+                    <i class="fa fa-plus-square"></i>
+                </a>&nbsp;
+                <a href="/Action/AntrenmanSil/@seciliAntrenmanID" title="Antrenmanı ve tüm verilerini sil">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </div>
+            <div class="simpleboxContent">
+                <table cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td height="5%"></td>
+                        </tr>
+                    </thead>
+                    @foreach (var antrenmanKayit in antrenmanKayitlari)
+                    {
+                        int seciliHareketID = antrenmanKayit.hareketID;
+                        var hareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == seciliHareketID).ToList();
+                        string seciliHareketAdi = hareketBilgi[0].hareketAdi;
 
-                int seciliKayitID = antrenmanKayitlari[x].kayitID;
-                var hareketSetleri = dbContext.HareketSetleri.Where(set => set.kayitID == seciliKayitID).ToList();
-                <thead>
-                    <tr>
-                        <td height="25" colspan="4">@seciliHareketAdi 
-                        &nbsp; <a href="/Home/HareketeSetEkle/@antrenmanKayitlari[x].kayitID" title="Harekete yeni set ekle"><i class="fa fa-plus-square"></i></a>
-                        &nbsp; <a href="/Action/AntrenmanKayitKompleSil/@antrenmanKayitlari[x].kayitID" title="Hareketi ve setleri sil"><i class="fa fa-trash-o"></i></a></td>
-                    </tr>
-                </thead>
-                for (int z = 0; z < hareketSetleri.Count; z++)
-                {
-                <tbody>
-                    <tr>
-                        <td class="sutunSolBosluk" height="23"><a href="/Action/SetSil/@hareketSetleri[z].setID" title="Bu seti sil"><i class="fa fa-trash-o"></i></a></td>
-                        <td class="sutunSetNumarasi">Set : @(z+1)</td>
-                        <td class="sutunAgirlik">Ağırlık : @hareketSetleri[z].setAgirlik KG</td>
-                        <td>Tekrar : @hareketSetleri[z].setTekrar</td>
-                    </tr>
-                </tbody>
-                }
-            }   
-                <thead>
-                    <tr>
-                        <td height="5%"></td>
-                    </tr>
-                </thead>
-            </table>
+                        int seciliKayitID = antrenmanKayit.kayitID;
+                        var hareketSetleri = dbContext.HareketSetleri.Where(set => set.kayitID == seciliKayitID).ToList();
+                        <thead>
+                            <tr>
+                                <td height="25" colspan="4">
+                                    @seciliHareketAdi
+                                    &nbsp; <a href="/Home/HareketeSetEkle/@antrenmanKayit.kayitID" title="Harekete yeni set ekle"><i class="fa fa-plus-square"></i></a>
+                                    &nbsp; <a href="/Action/AntrenmanKayitKompleSil/@antrenmanKayit.kayitID" title="Hareketi ve setleri sil"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                        </thead>
+                        int setNo = 1;
+                        foreach (var setler in hareketSetleri)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td class="sutunSolBosluk" height="23"><a href="/Action/SetSil/@setler.setID" title="Bu seti sil"><i class="fa fa-trash-o"></i></a></td>
+                                    <td class="sutunSetNumarasi">Set : @(setNo)</td>
+                                    <td class="sutunAgirlik">Ağırlık : @setler.setAgirlik KG</td>
+                                    <td>Tekrar : @setler.setTekrar</td>
+                                </tr>
+                            </tbody>
+                            setNo++;
+                        }
+                    }
+                    <thead>
+                        <tr>
+                            <td height="5%"></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-    </div>
     }
 </div>

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using FitnessUygulamasi.Models;
-using FitnessUygulamasi.DataTransferObject;
 
 namespace FitnessUygulamasi.Controllers
 {
@@ -85,7 +81,7 @@ namespace FitnessUygulamasi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult AntrenmanaHareketEkle(int id) {
+        public ActionResult AntrenmanaHareketEkle(int? id) {
 
             // Gelen ID'ye ait antrenman var mı kontrol ediyorum. Eğer yoksa ana sayfaya gönderiyorum.
             var antrenmanKontrol = dbContext.Antrenmanlar.Find(id);
@@ -108,7 +104,7 @@ namespace FitnessUygulamasi.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ActionResult HareketeSetEkle(int id) {
+        public ActionResult HareketeSetEkle(int? id) {
 
             // Gelen ID'ye ait hareket kaydı var mı kontrol ediyorum.
             var kayitKontrol = dbContext.AntrenmanKayitlari.Find(id);

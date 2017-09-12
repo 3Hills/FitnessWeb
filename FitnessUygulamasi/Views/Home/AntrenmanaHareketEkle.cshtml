@@ -37,9 +37,9 @@
                         <li>Eklenecek Hareket : </li>
                         <li>
                             <select class="defaultInput" name="hareketID">
-                            @for (int i = 0; i < ViewBag.Hareketler.Count; i++)
+                            @foreach (var hareket in ViewBag.Hareketler)
                             {
-                                <option value="@ViewBag.Hareketler[i].hareketID">@ViewBag.Hareketler[i].hareketAdi</option>
+                                <option value="@hareket.hareketID">@hareket.hareketAdi</option>
                             }
                             </select>
                         </li>
