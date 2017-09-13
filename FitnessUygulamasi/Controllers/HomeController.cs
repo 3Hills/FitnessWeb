@@ -22,18 +22,18 @@ namespace FitnessUygulamasi.Controllers
             var allWorkouts = dbContext.Antrenmanlar
                              .OrderByDescending(p => p.antrenmanTarih)
                              .Take(howManyRowWillShow)
-                             .Select(p => new WorkoutFullDetail()
+                             .Select(p => new WorkoutFullDetail
                              {
-                                 Antreman = new Antrenmanlar()
+                                 Ant = new Antreman
                                  {
-                                     antrenmanID = p.antrenmanID,
-                                     antrenmanAciklama = p.antrenmanAciklama,
-                                     antrenmanTarih = p.antrenmanTarih,
-                                     antrenmanDurum = p.antrenmanDurum
+                                     AntrenmanID = p.antrenmanID,
+                                     AntrenmanAciklama = p.antrenmanAciklama,
+                                     AntrenmanTarih = p.antrenmanTarih,
+                                     AntrenmanDurum = p.antrenmanDurum
                                  },
 
                                  AntremanKayitlari = dbContext.AntrenmanKayitlari
-                                 .Join(dbContext.Hareketler, ak => ak.hareketID, h => h.hareketID, (ak, h) => new AntremanKayit()
+                                 .Join(dbContext.Hareketler, ak => ak.hareketID, h => h.hareketID, (ak, h) => new AntremanKayit
                                  {
                                      KayitID = ak.kayitID,
                                      AntremanID = ak.antrenmanID,

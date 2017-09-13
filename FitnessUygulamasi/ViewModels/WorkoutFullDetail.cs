@@ -8,7 +8,7 @@ namespace FitnessUygulamasi.ViewModels
 {
     public class WorkoutFullDetail
     {
-        public Antrenmanlar Antreman { get; set; }
+        public Antreman Ant { get; set; }
         public List<AntremanKayit> AntremanKayitlari { get; set; }
 
     }
@@ -21,5 +21,14 @@ namespace FitnessUygulamasi.ViewModels
         public string HareketAdi { get; set; }
         public int HareketSira { get; set; }
         public List<HareketSetleri> Setler { get; set; }
+    }
+
+    public class Antreman
+    {
+        public int AntrenmanID { get; set; }
+        public string AntrenmanAciklama { get; set; }
+        public DateTime AntrenmanTarih { get; set; }
+        public string AntrenmanDurum { get; set; }
+
     }
 }
