@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using FitnessUygulamasi.Models;
+using FitnessUygulamasi.ViewModels;
 
 namespace FitnessUygulamasi.Controllers
 {
@@ -15,48 +16,36 @@ namespace FitnessUygulamasi.Controllers
         /// <returns></returns>
         public ActionResult Index(int? id)
         {
-
             // Eğer ID değeri girilmişse dashboard sayfasında 8 kayıt görüntülenecek.
-            int howManyRowWillShow;
-            if (id != null)
-            {
-                howManyRowWillShow = 8;
-            }
-            else {
-                howManyRowWillShow = 4;
-            }
+            int howManyRowWillShow = id.HasValue ? id.Value : 8;
 
-            // Linq ile DataTransferObject yöntemi.
-            //var tumAntrenmanlar = (from ant in dbContext.Antrenmanlar.Take(howManyRowWillShow) // Take fonksiyonu ile 4 kayıt al diyorum.
-            //                       orderby ant.antrenmanTarih descending
-            //                       select new AntrenmanListesi
-            //                       {
-            //                           antrenmanID = ant.antrenmanID,
-            //                           antrenmanAciklama = ant.antrenmanAciklama,
-            //                           antrenmanTarih = ant.antrenmanTarih,
-            //                           antrenmanDurum = ant.antrenmanDurum
-            //                       }).ToList();
+            var allWorkouts = dbContext.Antrenmanlar
+                             .OrderByDescending(p => p.antrenmanTarih)
+                             .Take(howManyRowWillShow)
+                             .Select(p => new WorkoutFullDetail
+                             {
+                                 Antreman = new Antrenmanlar
+                                 {
+                                     antrenmanID = p.antrenmanID,
+                                     antrenmanAciklama = p.antrenmanAciklama,
+                                     antrenmanTarih = p.antrenmanTarih,
+                                     antrenmanDurum = p.antrenmanDurum
+                                 },
 
-            // Lambda ile DataTransferObject yöntemi.
-            //var allWorkoutsOne = dbContext.Antrenmanlar.ToList().Select(ant => new AntrenmanListesi {
-            //    antrenmanID = ant.antrenmanID,
-            //    antrenmanAciklama = ant.antrenmanAciklama,
-            //    antrenmanTarih = ant.antrenmanTarih,
-            //    antrenmanDurum = ant.antrenmanDurum
-            //});
-
-            var allWorkouts = dbContext.Antrenmanlar.OrderByDescending(c => c.antrenmanTarih).Take(howManyRowWillShow).ToList();
-            //for (int i = 0; i < allWorkouts.Count; i++)
-            //{
-            //    ViewBag.antrenmanKayitlari[i] = dbContext.AntrenmanKayitlari.Where(antrenman => antrenman.antrenmanID == allWorkouts[i].antrenmanID).ToList();
-            //    var seciliHareketID = 0;
-            //    for (int y = 0; y < ViewBag.antrenmanKayitlari[i].Count; y++)
-            //    {
-            //        seciliHareketID = ViewBag.antrenmanKayitlari[i].hareketID;
-            //        var hareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == seciliHareketID).ToList();
-            //    }
-            //}
-
+                                 AntremanKayitlari = dbContext.AntrenmanKayitlari
+                                 .Join(dbContext.Hareketler, ak => ak.hareketID, h => h.hareketID, (ak, h) => new AntremanKayit
+                                 {
+                                     KayitID = ak.kayitID,
+                                     AntremanID = ak.antrenmanID,
+                                     HareketID = ak.hareketID,
+                                     HareketAdi = h.hareketAdi,
+                                     HareketSira = ak.hareketSira,
+                                     Setler = dbContext.HareketSetleri.Where(x => x.kayitID == ak.kayitID).ToList()
+                                 })
+                                 .Where(k => k.AntremanID == p.antrenmanID)
+                                 .OrderByDescending(k => k.HareketSira).ToList()
+                             })
+                             .ToList();
             return View(allWorkouts);
         }
 
