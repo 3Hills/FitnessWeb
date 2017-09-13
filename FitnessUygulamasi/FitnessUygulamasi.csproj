@@ -187,6 +187,7 @@
       <DependentUpon>FitnessModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\WorkoutFullDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\style.css" />
