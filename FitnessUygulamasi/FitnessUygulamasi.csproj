@@ -219,7 +219,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Scripts\" />
     <Folder Include="Views\Action\" />
   </ItemGroup>
   <ItemGroup>
