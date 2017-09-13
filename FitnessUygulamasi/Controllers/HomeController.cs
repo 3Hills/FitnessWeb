@@ -24,12 +24,16 @@ namespace FitnessUygulamasi.Controllers
                              .Take(howManyRowWillShow)
                              .Select(p => new WorkoutFullDetail
                              {
+<<<<<<< HEAD
                                  Antreman = new Antrenmanlar
+=======
+                                 Ant = new Antreman
+>>>>>>> 8b2788bbcfd7f90542c930309353e89e2bfcd217
                                  {
-                                     antrenmanID = p.antrenmanID,
-                                     antrenmanAciklama = p.antrenmanAciklama,
-                                     antrenmanTarih = p.antrenmanTarih,
-                                     antrenmanDurum = p.antrenmanDurum
+                                     AntrenmanID = p.antrenmanID,
+                                     AntrenmanAciklama = p.antrenmanAciklama,
+                                     AntrenmanTarih = p.antrenmanTarih,
+                                     AntrenmanDurum = p.antrenmanDurum
                                  },
 
                                  AntremanKayitlari = dbContext.AntrenmanKayitlari
