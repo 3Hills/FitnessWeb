@@ -44,7 +44,7 @@ namespace FitnessUygulamasi.Controllers
                                      Setler = dbContext.HareketSetleri.Where(x => x.kayitID == ak.kayitID).ToList()
                                  })
                                  .Where(k => k.AntremanID == p.antrenmanID)
-                                 .OrderBy(k => k.KayitID).ToList()
+                                 .OrderBy(k => k.HareketSira).ToList()
                              })
                              .ToList();
             return View(allWorkouts);

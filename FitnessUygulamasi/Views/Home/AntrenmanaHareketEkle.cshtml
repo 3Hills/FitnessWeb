@@ -28,7 +28,6 @@
                         <li>
                             <input type="text" class="defaultInput inputFullWidth" value="@seciliAntrenmanAciklama" disabled>
                             <input type="hidden" name="antrenmanID" value="@seciliAntrenmanID" />
-                            <input type="hidden" name="hareketSira" value="0" />
                         </li>
                         <li>Antrenman Tarihi : </li>
                         <li><input type="text" class="defaultInput" value="@String.Format("{0:dd MMMM yyyy dddd}", seciliAntrenmanTarih)" disabled></li>
@@ -43,6 +42,8 @@
                             }
                             </select>
                         </li>
+                        <li>Hareket Sırası : </li>
+                        <li><input type="text" class="defaultInput inputSmallWidth" name="hareketSira" placeholder="örn: 1" /></li>
                         <li><button><i class="fa fa-save"></i>&nbsp; Hareketi Antrenmana Ekle</button></li>
                     </ul>
                 </form>
