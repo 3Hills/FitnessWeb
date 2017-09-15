@@ -10,7 +10,7 @@
     @foreach (WorkoutFullDetail wfd in Model)
     {
         <div class="col-3">
-            <div class="simpleboxHeader">
+            <div class="simpleboxHeader headerUfakFont">
                 @String.Format("{0:dd MMMM dddd}", wfd.Ant.AntrenmanTarih) | @wfd.Ant.AntrenmanAciklama&nbsp;&nbsp;
                 <a href="/Home/AntrenmanaHareketEkle/@wfd.Ant.AntrenmanID" title="Antrenmana yeni hareket ekle">
                     <i class="fa fa-plus-square"></i>
@@ -42,7 +42,10 @@
                         {
                             <tbody>
                                 <tr>
-                                    <td class="sutunSolBosluk" height="23"><a href="/Action/SetSil/@set.setID" title="Bu seti sil"><i class="fa fa-trash-o"></i></a></td>
+                                    <td class="sutunSolBosluk" height="23">
+                                        <a href="/Action/SetSil/@set.setID" title="Bu seti sil"><i class="fa fa-trash-o"></i></a>&nbsp;&nbsp;
+                                        <a href="/Home/SetUpdate/@set.setID" title="Bu seti güncelle"><i class="fa fa-pencil-square-o"></i></a>
+                                    </td>
                                     <td class="sutunSetNumarasi">Set : @(setNo)</td>
                                     <td class="sutunAgirlik">Ağırlık : @set.setAgirlik KG</td>
                                     <td>Tekrar : @set.setTekrar</td>

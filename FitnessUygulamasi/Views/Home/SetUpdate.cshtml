@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Set Update";
+}
+<div class="Satir">
+    <div class="col-4"></div>
+    <div class="col-4">
+        <div class="simpleboxHeader">Seti Güncelle</div>
+        <div class="simpleboxContent">
+            <div class="formBox">
+                <form action="/Action/SetUpdate/@Model[0].setID" method="post">
+                    <ul>
+                        <li>Ağırlık ve Tekrar : </li>
+                        <li>
+                            <input type="text" class="defaultInput inputSmallWidth" name="setAgirlik" value="@Model[0].setAgirlik">
+                            <input type="text" class="defaultInput inputSmallWidth" name="setTekrar" value="@Model[0].setTekrar">
+                        </li>
+                        <li><button><i class="fa fa-save"></i>&nbsp; Seti Güncelle</button></li>
+                    </ul>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-4"></div>
+</div>

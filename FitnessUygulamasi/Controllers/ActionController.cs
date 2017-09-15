@@ -92,7 +92,7 @@ namespace FitnessUygulamasi.Controllers
         public ActionResult HareketeSetiKaydet(HareketSetleri set) {
 
             // #### Gelen değerler sayı mı değil mi diye kontrol edilecek.
-            if (Request.Form["setAgirlik"].isNumeric() == false && Request.Form["setTekrar"].isNumeric() == false)
+            if (Request.Form["setAgirlik"].isNumeric() == false || Request.Form["setTekrar"].isNumeric() == false)
             {
                 Response.Redirect($"/Home/HareketeSetEkle/{Request.Form["kayitID"]}?mesaj=agirlikTekrarSayiDegil");
             }
@@ -202,6 +202,43 @@ namespace FitnessUygulamasi.Controllers
             }
             else {
                 Response.Redirect("/Home/Index?mesaj=antrenmanIDBulunamadi");
+            }
+
+            return View();
+        }
+
+        /// <summary>
+        /// Set update formu post edildiğinde çalışacak method.
+        /// </summary>
+        /// <param name="set"></param>
+        /// <returns></returns>
+        public ActionResult SetUpdate(HareketSetleri set, int? id) {
+
+            // Önce gelen id ye ait set kaydını sorgulayacağım.
+            var setKontrol = dbContext.HareketSetleri.Find(id);
+            if (setKontrol == null)
+            {
+                Response.Redirect("/Home/Index?mesaj=setIDBulunamadi");
+            }
+            else {
+
+                // Ardından gelen değerler sayı mı değil mi diye kontrol edicem.
+                if (Request.Form["setAgirlik"].isNumeric() == false || Request.Form["setTekrar"].isNumeric() == false)
+                {
+                    Response.Redirect($"/Home/SetUpdate/{id}?mesaj=agirlikTekrarSayiDegil");
+                }
+                else {
+
+                    // Gelen değerlerde bir sıkıntı yok, tablo değerlerini bu değerlere eşitliyorum.
+                    setKontrol.setAgirlik = set.setAgirlik;
+                    setKontrol.setTekrar = set.setTekrar;
+
+                    // Update işlemini gerçekleştirmesi komutunu veriyorum.
+                    dbContext.SaveChanges();
+                    Response.Redirect("/Home/Index?mesaj=setGuncellendi");
+
+                }
+
             }
 
             return View();

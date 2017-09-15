@@ -17,18 +17,15 @@ namespace FitnessUygulamasi.Controllers
         public ActionResult Index(int? id)
         {
             // Eğer ID değeri girilmişse dashboard sayfasında 8 kayıt görüntülenecek.
-            int howManyRowWillShow = id.HasValue ? id.Value : 8;
+            int howManyRowWillShow = id.HasValue ? 8 : 4;
 
             var allWorkouts = dbContext.Antrenmanlar
                              .OrderByDescending(p => p.antrenmanTarih)
                              .Take(howManyRowWillShow)
                              .Select(p => new WorkoutFullDetail
                              {
-<<<<<<< HEAD
-                                 Antreman = new Antrenmanlar
-=======
                                  Ant = new Antreman
->>>>>>> 8b2788bbcfd7f90542c930309353e89e2bfcd217
+
                                  {
                                      AntrenmanID = p.antrenmanID,
                                      AntrenmanAciklama = p.antrenmanAciklama,
@@ -47,7 +44,7 @@ namespace FitnessUygulamasi.Controllers
                                      Setler = dbContext.HareketSetleri.Where(x => x.kayitID == ak.kayitID).ToList()
                                  })
                                  .Where(k => k.AntremanID == p.antrenmanID)
-                                 .OrderByDescending(k => k.HareketSira).ToList()
+                                 .OrderBy(k => k.KayitID).ToList()
                              })
                              .ToList();
             return View(allWorkouts);
@@ -115,6 +112,24 @@ namespace FitnessUygulamasi.Controllers
             ViewBag.HareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == kayitHareketID).ToList();
 
             return View(kayitBilgi);
+        }
+
+        /// <summary>
+        /// Set güncellemek istendiğinde çalışacak method.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ActionResult SetUpdate(int? id) {
+
+            // Set idsine göre veritabanındaki kaydı seçicem. View içerisine bilgilerini göndericem.
+            var setKontrol = dbContext.HareketSetleri.Find(id);
+                if (setKontrol == null) {
+                    Response.Redirect("/Home/Index?mesaj=setBulunamadi");
+                }
+
+            var setBilgi = dbContext.HareketSetleri.Where(set => set.setID == id).ToList();
+
+            return View(setBilgi);
         }
     }
 }

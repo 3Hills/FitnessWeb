@@ -10,7 +10,7 @@ namespace FitnessUygulamasi.ViewModels
     {
         public Antreman Ant { get; set; }
         public List<AntremanKayit> AntremanKayitlari { get; set; }
-
+        public Antrenmanlar Antreman { get; internal set; }
     }
 
     public class AntremanKayit
