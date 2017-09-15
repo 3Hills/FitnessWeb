@@ -1,6 +1,6 @@
 ﻿namespace FitnessUygulamasi.DataTransferObject
 {
-    public class HareketListesi
+    public class Hareket
     {
         public int hareketID { get; set; }
         public string hareketAdi { get; set; }

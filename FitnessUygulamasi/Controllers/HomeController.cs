@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using FitnessUygulamasi.Models;
 using FitnessUygulamasi.ViewModels;
+using FitnessUygulamasi.DataTransferObject;
 
 namespace FitnessUygulamasi.Controllers
 {
@@ -24,27 +25,27 @@ namespace FitnessUygulamasi.Controllers
                              .Take(howManyRowWillShow)
                              .Select(p => new WorkoutFullDetail
                              {
-                                 Ant = new Antreman
+                                 Ant = new Antrenman
 
                                  {
-                                     AntrenmanID = p.antrenmanID,
-                                     AntrenmanAciklama = p.antrenmanAciklama,
-                                     AntrenmanTarih = p.antrenmanTarih,
-                                     AntrenmanDurum = p.antrenmanDurum
+                                     antrenmanID = p.antrenmanID,
+                                     antrenmanAciklama = p.antrenmanAciklama,
+                                     antrenmanTarih = p.antrenmanTarih,
+                                     antrenmanDurum = p.antrenmanDurum
                                  },
 
                                  AntremanKayitlari = dbContext.AntrenmanKayitlari
-                                 .Join(dbContext.Hareketler, ak => ak.hareketID, h => h.hareketID, (ak, h) => new AntremanKayit
+                                 .Join(dbContext.Hareketler, ak => ak.hareketID, h => h.hareketID, (ak, h) => new AntrenmanKayit
                                  {
-                                     KayitID = ak.kayitID,
-                                     AntremanID = ak.antrenmanID,
-                                     HareketID = ak.hareketID,
-                                     HareketAdi = h.hareketAdi,
-                                     HareketSira = ak.hareketSira,
+                                     kayitID = ak.kayitID,
+                                     antrenmanID = ak.antrenmanID,
+                                     hareketID = ak.hareketID,
+                                     hareketAdi = h.hareketAdi,
+                                     hareketSira = ak.hareketSira,
                                      Setler = dbContext.HareketSetleri.Where(x => x.kayitID == ak.kayitID).ToList()
                                  })
-                                 .Where(k => k.AntremanID == p.antrenmanID)
-                                 .OrderBy(k => k.HareketSira).ToList()
+                                 .Where(k => k.antrenmanID == p.antrenmanID)
+                                 .OrderBy(k => k.hareketSira).ToList()
                              })
                              .ToList();
             return View(allWorkouts);
@@ -80,13 +81,31 @@ namespace FitnessUygulamasi.Controllers
                     Response.Redirect("/Home/Index");
                 }
 
-            // Sıkıntı yoksa gelen ID'ye ait kaydın bilgilerini değişkene atıp view kısmına gönderiyorum.
-            var antrenmanBilgi = dbContext.Antrenmanlar.Where(antrenman => antrenman.antrenmanID == id).ToList();
+            var antrenmanaHareketEkle = dbContext.Antrenmanlar
+                        // Gönderilen idye ait antrenmanı seçtiriyorum.
+                        .Where(k => k.antrenmanID == id)
+                        // Seçilen veri AntrenmanaHareketEkle tipinde olacak.
+                        .Select(ant => new AntrenmanaHareketEkle {
 
-            // View içerisinde veritabanı sorgusu yapmak yerine controller içerisinden hareket listesini gönderiyorum.
-            ViewBag.Hareketler = dbContext.Hareketler.ToList();
+                            // AntrenmanaHareketEkle sınıfındaki Antrenman özelliğini Antrenman sınıfından türetiyorum.
+                            // Antrenman özelliğinin tipi 'Antrenman' olduğundan (List<Antrenman> değil) ToList() koymuyorum.
+                            Antrenman = new Antrenman {
+                                antrenmanID = ant.antrenmanID,
+                                antrenmanAciklama = ant.antrenmanAciklama,
+                                antrenmanTarih = ant.antrenmanTarih,
+                                antrenmanDurum = ant.antrenmanDurum
+                            },
+                            // AntrenmanaHareketEkle sınıfındaki Hareketler özelliğini Hareket sınıfından türetiyorum.
+                            // Hareketler özelliğinin tipi List<Hareket> olduğundan sonuna ToList() koyuyorum.
+                            Hareketler = dbContext.Hareketler
+                                            .Select(hrkt => new Hareket {
+                                                hareketID = hrkt.hareketID,
+                                                hareketAdi = hrkt.hareketAdi
+                                            }).ToList()
 
-            return View(antrenmanBilgi);
+                        }).ToList();
+
+            return View(antrenmanaHareketEkle);
         }
 
         /// <summary>
@@ -102,20 +121,48 @@ namespace FitnessUygulamasi.Controllers
                     Response.Redirect("/Home/Index");
                 }
 
-            // ID'ye ait bilgileri değişkene atayıp view dosyasına gönderiyorum.
-            var kayitBilgi = dbContext.AntrenmanKayitlari.Where(kayit => kayit.kayitID == id).ToList();
-            int kayitAntrenmanID = kayitBilgi[0].antrenmanID;
-            int kayitHareketID = kayitBilgi[0].hareketID;
+            //// ID'ye ait bilgileri değişkene atayıp view dosyasına gönderiyorum.
+            //var kayitBilgi = dbContext.AntrenmanKayitlari.Where(kayit => kayit.kayitID == id).ToList();
+            //int kayitAntrenmanID = kayitBilgi[0].antrenmanID;
+            //int kayitHareketID = kayitBilgi[0].hareketID;
 
-            // Kayda ait antrenman ve hareket bilgilerini view içerisine viewbag ile gönderiyorum.
-            ViewBag.AntrenmanBilgi = dbContext.Antrenmanlar.Where(antrenman => antrenman.antrenmanID == kayitAntrenmanID).ToList();
-            ViewBag.HareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == kayitHareketID).ToList();
+            //// Kayda ait antrenman ve hareket bilgilerini view içerisine viewbag ile gönderiyorum.
+            //ViewBag.AntrenmanBilgi = dbContext.Antrenmanlar.Where(antrenman => antrenman.antrenmanID == kayitAntrenmanID).ToList();
+            //ViewBag.HareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == kayitHareketID).ToList();
 
-            return View(kayitBilgi);
+            //return View(kayitBilgi);
+
+            var hareketeSetEkle = dbContext.AntrenmanKayitlari
+                        .Where(a => a.kayitID == id)
+                        .Select(b => new HareketeSetEkle {
+
+                            AntrenmanKayit = new AntrenmanKayit {
+                                kayitID = b.kayitID,
+                                antrenmanID = b.antrenmanID,
+                                hareketID = b.hareketID,
+                                hareketSira = b.hareketSira
+                            },
+
+                            Antrenman = dbContext.Antrenmanlar.Where(c => c.antrenmanID == b.antrenmanID)
+                                        .Select(d => new Antrenman {
+                                            antrenmanAciklama = d.antrenmanAciklama,
+                                            antrenmanTarih = d.antrenmanTarih,
+                                            antrenmanDurum = d.antrenmanDurum
+                                        }).FirstOrDefault(),
+                        
+                            Hareket = dbContext.Hareketler.Where(e => e.hareketID == b.hareketID)
+                                      .Select(f => new Hareket {
+                                          hareketAdi = f.hareketAdi
+                                      }).FirstOrDefault()
+
+                        })
+                        .ToList();
+
+            return View(hareketeSetEkle);
         }
 
         /// <summary>
-        /// Set güncellemek istendiğinde çalışacak method.
+        /// Set güncelleme formu görüntülenmek istendiğinde çalışacak method.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

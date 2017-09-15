@@ -3,11 +3,8 @@
     ViewBag.Title = "Harekete Set Ekle";
 }
 @{ 
-    int kayitID = Model[0].kayitID;
-
-    string antrenmanTarih = String.Format("{0: dd MMMM yyyy dddd}", ViewBag.AntrenmanBilgi[0].antrenmanTarih);
     string antrenmanDurum;
-    if (ViewBag.AntrenmanBilgi[0].antrenmanDurum == "0")
+    if (Model[0].Antrenman.antrenmanDurum == "0")
     {
         antrenmanDurum = "Yapılmadı";
     }
@@ -25,15 +22,15 @@
                     <ul>
                         <li>Antrenman Açıklaması : </li>
                         <li>
-                            <input type="text" class="defaultInput inputFullWidth" value="@ViewBag.AntrenmanBilgi[0].antrenmanAciklama" disabled>
-                            <input type="hidden" name="kayitID" value="@kayitID" />
+                            <input type="text" class="defaultInput inputFullWidth" value="@Model[0].Antrenman.antrenmanAciklama" disabled>
+                            <input type="hidden" name="kayitID" value="@Model[0].AntrenmanKayit.kayitID" />
                         </li>
                         <li>Antrenman Tarihi : </li>
-                        <li><input type="text" class="defaultInput" value="@antrenmanTarih" disabled></li>
+                        <li><input type="text" class="defaultInput" value="@String.Format("{0: dd MMMM yyyy dddd}", Model[0].Antrenman.antrenmanTarih)" disabled></li>
                         <li>Antrenman Durumu : </li>
                         <li><input type="text" class="defaultInput" value="@antrenmanDurum" disabled></li>
                         <li>Set Eklenecek Hareket : </li>
-                        <li><input type="text" class="defaultInput inputFullWidth" value="@ViewBag.HareketBilgi[0].hareketAdi" disabled></li>
+                        <li><input type="text" class="defaultInput inputFullWidth" value="@Model[0].Hareket.hareketAdi" disabled></li>
                         <li>Ağırlık ve Tekrar : </li>
                         <li>
                             <input type="text" class="defaultInput inputSmallWidth" name="setAgirlik" placeholder="Ağırlık örn: 25">

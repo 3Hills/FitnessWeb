@@ -2,7 +2,7 @@
 
 namespace FitnessUygulamasi.DataTransferObject
 {
-    public class AntrenmanListesi
+    public class Antrenman
     {
         public int antrenmanID { get; set; }
         public string antrenmanAciklama { get; set; }

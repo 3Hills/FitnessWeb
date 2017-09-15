@@ -71,7 +71,17 @@ namespace FitnessUygulamasi.Controllers
         /// </summary>
         /// <param name="antrenmanKayit"></param>
         /// <returns></returns>
-        public ActionResult AntrenmanaHareketiKaydet(AntrenmanKayitlari antrenmanKayit) {
+        public ActionResult AntrenmanaHareketiKaydet(AntrenmanKayitlari antrenmanKayit, int? hareketSira) {
+
+            if (hareketSira.ToString().Length <= 0)
+            {
+                // ### Burada antrenmana kayıtlı hareketleri listeleyip 
+                // eklenen son hareketin hareketsirasını bir artırıp o değeri verebilirim.
+                antrenmanKayit.hareketSira = 10;
+            }
+            else {
+                antrenmanKayit.hareketSira = antrenmanKayit.hareketSira;
+            }
 
             // Antrenmana ait hareketi ekleme komutu veriyorum.
             dbContext.AntrenmanKayitlari.Add(antrenmanKayit);

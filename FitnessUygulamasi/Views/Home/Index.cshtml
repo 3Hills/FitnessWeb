@@ -1,21 +1,21 @@
 ﻿@{
     ViewBag.Title = "Dashboard";
 }
-@using FitnessUygulamasi.Models;
+@using FitnessUygulamasi.DataTransferObject;
 @using FitnessUygulamasi.ViewModels;
-@{ 
+@*@{ 
     FitnessWebAppEntities dbContext = new FitnessWebAppEntities();
-}
+}*@
 <div class="Satir">
     @foreach (WorkoutFullDetail wfd in Model)
     {
         <div class="col-3">
             <div class="simpleboxHeader headerUfakFont">
-                @String.Format("{0:dd MMMM dddd}", wfd.Ant.AntrenmanTarih) | @wfd.Ant.AntrenmanAciklama&nbsp;&nbsp;
-                <a href="/Home/AntrenmanaHareketEkle/@wfd.Ant.AntrenmanID" title="Antrenmana yeni hareket ekle">
+                @String.Format("{0:dd MMMM dddd}", wfd.Ant.antrenmanTarih) | @wfd.Ant.antrenmanAciklama&nbsp;&nbsp;
+                <a href="/Home/AntrenmanaHareketEkle/@wfd.Ant.antrenmanID" title="Antrenmana yeni hareket ekle">
                     <i class="fa fa-plus-square"></i>
                 </a>&nbsp;
-                <a href="/Action/AntrenmanSil/@wfd.Ant.AntrenmanID" title="Antrenmanı ve tüm verilerini sil">
+                <a href="/Action/AntrenmanSil/@wfd.Ant.antrenmanID" title="Antrenmanı ve tüm verilerini sil">
                     <i class="fa fa-trash-o"></i>
                 </a>
             </div>
@@ -26,14 +26,14 @@
                             <td height="5%"></td>
                         </tr>
                     </thead>
-                    @foreach (AntremanKayit antrenmanKayit in wfd.AntremanKayitlari)
+                    @foreach (AntrenmanKayit antrenmanKayit in wfd.AntremanKayitlari)
                     {
                         <thead>
                             <tr>
                                 <td height="25" colspan="4">
-                                    @antrenmanKayit.HareketAdi
-                                    &nbsp; <a href="/Home/HareketeSetEkle/@antrenmanKayit.KayitID" title="Harekete yeni set ekle"><i class="fa fa-plus-square"></i></a>
-                                    &nbsp; <a href="/Action/AntrenmanKayitKompleSil/@antrenmanKayit.KayitID" title="Hareketi ve setleri sil"><i class="fa fa-trash-o"></i></a>
+                                    @antrenmanKayit.hareketAdi
+                                    &nbsp; <a href="/Home/HareketeSetEkle/@antrenmanKayit.kayitID" title="Harekete yeni set ekle"><i class="fa fa-plus-square"></i></a>
+                                    &nbsp; <a href="/Action/AntrenmanKayitKompleSil/@antrenmanKayit.kayitID" title="Hareketi ve setleri sil"><i class="fa fa-trash-o"></i></a>
                                 </td>
                             </tr>
                         </thead>

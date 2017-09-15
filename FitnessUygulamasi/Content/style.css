@@ -204,8 +204,9 @@ button {
 
 @media screen and (max-width: 1024px) {
     .col-3 {
-        width: 50%;
+        width: 48%;
         margin-bottom: 4%;
+        margin-right: 2%;
     }
 }
 

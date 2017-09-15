@@ -2,11 +2,9 @@
 @{
     ViewBag.Title = "Antrenmana Hareket Ekle";
 }
+@*@using FitnessUygulamasi.ViewModels;*@
 @{ 
-    int seciliAntrenmanID = Model[0].antrenmanID;
-    string seciliAntrenmanAciklama = Model[0].antrenmanAciklama;
-    DateTime seciliAntrenmanTarih = Model[0].antrenmanTarih;
-    string seciliAntrenmanDurum = Model[0].antrenmanDurum;
+    string seciliAntrenmanDurum = Model[0].Antrenman.antrenmanDurum;
     if (seciliAntrenmanDurum == "0")
     {
         seciliAntrenmanDurum = "Yapılmadı";
@@ -26,17 +24,17 @@
                     <ul>
                         <li>Antrenman Açıklaması : </li>
                         <li>
-                            <input type="text" class="defaultInput inputFullWidth" value="@seciliAntrenmanAciklama" disabled>
-                            <input type="hidden" name="antrenmanID" value="@seciliAntrenmanID" />
+                            <input type="text" class="defaultInput inputFullWidth" value="@Model[0].Antrenman.antrenmanAciklama" disabled>
+                            <input type="hidden" name="antrenmanID" value="@Model[0].Antrenman.antrenmanID" />
                         </li>
                         <li>Antrenman Tarihi : </li>
-                        <li><input type="text" class="defaultInput" value="@String.Format("{0:dd MMMM yyyy dddd}", seciliAntrenmanTarih)" disabled></li>
+                        <li><input type="text" class="defaultInput" value="@String.Format("{0:dd MMMM yyyy dddd}", Model[0].Antrenman.antrenmanTarih)" disabled></li>
                         <li>Antrenman Durumu : </li>
                         <li><input type="text" class="defaultInput" value="@seciliAntrenmanDurum" disabled></li>
                         <li>Eklenecek Hareket : </li>
                         <li>
                             <select class="defaultInput" name="hareketID">
-                            @foreach (var hareket in ViewBag.Hareketler)
+                            @foreach (var hareket in Model[0].Hareketler)
                             {
                                 <option value="@hareket.hareketID">@hareket.hareketAdi</option>
                             }
