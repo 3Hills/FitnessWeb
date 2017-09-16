@@ -121,17 +121,6 @@ namespace FitnessUygulamasi.Controllers
                     Response.Redirect("/Home/Index");
                 }
 
-            //// ID'ye ait bilgileri değişkene atayıp view dosyasına gönderiyorum.
-            //var kayitBilgi = dbContext.AntrenmanKayitlari.Where(kayit => kayit.kayitID == id).ToList();
-            //int kayitAntrenmanID = kayitBilgi[0].antrenmanID;
-            //int kayitHareketID = kayitBilgi[0].hareketID;
-
-            //// Kayda ait antrenman ve hareket bilgilerini view içerisine viewbag ile gönderiyorum.
-            //ViewBag.AntrenmanBilgi = dbContext.Antrenmanlar.Where(antrenman => antrenman.antrenmanID == kayitAntrenmanID).ToList();
-            //ViewBag.HareketBilgi = dbContext.Hareketler.Where(hareket => hareket.hareketID == kayitHareketID).ToList();
-
-            //return View(kayitBilgi);
-
             var hareketeSetEkle = dbContext.AntrenmanKayitlari
                         .Where(a => a.kayitID == id)
                         .Select(b => new HareketeSetEkle {
